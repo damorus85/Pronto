@@ -12,7 +12,6 @@ import { TableNumberPage } from '../table-number/table-number';
 import { MenuPage } from '../menu/menu';
 import { MenuListPage } from '../menu-list/menu-list';
 import { OrdersPage } from '../orders/orders';
-import { ScanPage } from '../../pages/scan/scan';
 
 // Self made modals
 import { HomeMenuModalPage } from '../home-menu-modal/home-menu-modal';
