@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-navbar transparent>
+    <ion-title>
+      {{customer.company}}
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="openSettings()">
+        <ion-icon name="menu" class="white"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!-- Refreshed -->
+  <ion-refresher (ionRefresh)="refreshHome($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Table number -->
+  <ion-card>
+    <ion-item>
+        <h2>Bordnummer</h2>
+        <span item-right>{{tablenumber}}</span>
+    </ion-item>
+  </ion-card>
+
+  <br><br>
+  <!-- Buttons -->
+  <div>
+    <div class="floating-grid-container">
+
+      <!-- Call the waiter -->
+      <div class="grid-item" text-center>
+        <button ion-button (click)="callWaiter()" large>
+          <ion-icon name="person"></ion-icon>
+        </button>    
+        <div>Tilkall betjeningen</div>
+      </div>
+
+      <!-- See the menus -->
+      <div class="grid-item" text-center>
+        <div *ngIf="customer.menuCount > 1">
+          <button ion-button (click)="gotoMenus()" large strong>
+            <ion-icon name="restaurant"></ion-icon>
+          </button>
+          <div>Se v&aring;re menyer</div>
+        </div>
+
+        <div *ngIf="customer.menuCount == 1">
+          <button ion-button (click)="gotoMenu(customer.menus[0].customermenuid)" large>
+            <ion-icon name="restaurant"></ion-icon> 
+          </button>
+          <div>Se v&aring;r meny</div>
+        </div>
+      </div>
+
+      <!-- Get the check -->
+      <div class="grid-item" *ngIf="haveOrders" text-center>
+        <button ion-button big (click)="getTheCheck()" large>
+          <ion-icon name="card"></ion-icon>
+        </button>
+        <div>Be om regningen</div>
+      </div>
+
+      <!-- Your orders -->
+      <div class="grid-item" *ngIf="haveOrders" text-center>
+        <button ion-button (click)="gotoOrders()" large>
+          <ion-icon name="cart"></ion-icon>
+        </button>     
+        <div>Dine bestillinger</div>
+      </div>
+
+      <!-- Change table -->
+      <div class="grid-item" text-center>
+        <button ion-button (click)="changeTableNumber()" large>
+            <ion-icon name="flag"></ion-icon>
+        </button>     
+        <div>Bytte bordnummer</div>
+      </div>
+
+      <!-- Finish visit -->
+      <div class="grid-item" text-center>
+        <button color="secondary" ion-button (click)="closeVisit()" large>
+          <ion-icon name="walk"></ion-icon>
+        </button>    
+        <div>Avslutt bes&oslash;ket</div>
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+
+<!-- Shopping cart -->
+<ion-footer class="dark" *ngIf="cartTotal > 0" (click)="gotoCart()">
+  <ion-grid padding>
+    <ion-row>
+      <ion-col col-5 text-center>
+        Din bestilling ({{cartAmount}})
+      </ion-col>
+      <ion-col col-6 text-center>
+        {{cartTotal | priceFormat}}
+      </ion-col>
+      <ion-col col-1 text-center>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

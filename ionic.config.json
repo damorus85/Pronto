@@ -1,0 +1,8 @@
+{
+  "name": "Pronto",
+  "app_id": "f70b516d",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

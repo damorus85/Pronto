@@ -1,0 +1,181 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif&subset=latin-ext');
+
+.button-md {
+    text-transform: none;
+    font-size: 1.6rem;
+}
+
+ion-header {
+    background: linear-gradient(0deg, #434345 0%, #434345 100%);
+    border-bottom: 5px solid #eeebe1;
+}
+
+ion-title {
+    color: #fff !important;
+}
+
+ion-content {
+    background-color: #f2f2f2 !important;
+    //background: linear-gradient(180deg, #d5d0b8 0%, #d5d0b8 8%, #f4f2ec 20%, #f4f2ec 100%) !important;
+}
+
+ion-content.splash {
+    fill: #55bbeb;
+    background: linear-gradient(135deg, #55bbeb 0%, #84c450 100%) !important;
+}
+
+h1 {
+    font-family: Damion !important;
+}
+
+.white {
+    color: #fff;
+}
+
+ion-header ion-icon.back-button-icon.icon, 
+ion-header span.back-button-text.back-button-text-ios {
+   color: #fff !important;
+}
+
+ion-header .toolbar-title {
+    color: #fff !important;
+}
+
+h2 {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+// Footer cart
+ion-footer.dark {
+    /*background-color: #000;
+    color: #fff !important;
+    font-size: 1.1em;*/
+    width: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    
+    ion-grid {
+        border-radius: 2px;
+        background-color: rgba($color: #55bbeb, $alpha: .9);
+        color: #fff !important;
+        font-size: 1.1em;
+    }
+}
+
+ion-footer.dark.danger ion-grid {
+    background-color: rgba($color: #e50a0a, $alpha: .9);
+}
+
+// Text colors
+.text-mantis, .text-mantis::before {
+	color: #42B574;
+    background-image: -webkit-linear-gradient(0deg, #42b574 0%, #84c450 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.text-red, .text-red::before {
+	color: #f54b0f;
+    background-image: -webkit-linear-gradient(0deg, #f54b0f 0%, #e50a0a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.text-orange, .text-orange::before {
+	color: #f3a43d;
+    background-image: -webkit-linear-gradient(0deg, #f3a43d 0%, #f3a43d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+// Boxes
+.box {
+    background-color: #f2f2f2;
+    color: #434345;
+    border-radius: 3px;
+    font-size: 1.7em;
+    padding: 10px 0 !important;
+    margin: 10px 0;
+}
+
+button.action-btn {
+
+    padding: 2em 2em;
+    font-size: 1.2em;
+    line-height: 1.4em;
+}
+
+ion-card-header {
+
+    span.secondary {
+        font-weight: 200;
+        font-size: .9em;
+        opacity: .8;
+    }
+
+    p {
+        opacity: .8;
+    }
+}
+
+// Floating grid container
+.floating-grid-container {
+    float: left;
+    width: 100%;
+
+    .grid-item {
+        float: left;
+        width: 50%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+// Popup window
+div.popup_window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .3);
+
+
+    div.popup_window_content {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        right: 10%;
+        bottom: 10%;
+        box-shadow: 0 0 30px rgba(0, 0, 0, .7);
+
+        ion-header {
+            border-radius: 3px 3px 0 0;
+        }
+
+        ion-content {
+            border-radius: 3px;
+        }
+
+        ion-footer {
+            border-radius: 0 0 3px 3px;
+        }
+    }
+}
