@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PriceFormatPipe } from './price-format/price-format';
-import { AllergiesFormatPipe } from './allergies-format/allergies-format';
 @NgModule({
-	declarations: [PriceFormatPipe,
-    AllergiesFormatPipe],
+	declarations: [PriceFormatPipe],
 	imports: [],
-	exports: [PriceFormatPipe,
-    AllergiesFormatPipe]
+	exports: [PriceFormatPipe]
 })
 export class PipesModule {}

@@ -18,12 +18,10 @@ import { HTTP } from '@ionic-native/http';
 
 // Self made providers
 import { ApiProvider } from '../providers/api/api';
-import { LoginProvider } from '../providers/login/login';
 import { ShoppingcartProvider } from '../providers/shoppingcart/shoppingcart';
 
 // Self made pipes
 import { PriceFormatPipe } from '../pipes/price-format/price-format';
-import { AllergiesFormatPipe } from '../pipes/allergies-format/allergies-format';
 
 // Pages
 import { SplashPage } from '../pages/splash/splash';
@@ -72,7 +70,6 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     OrderDetailsPage,
     OrderHistoryPage,
     PriceFormatPipe,
-    AllergiesFormatPipe
   ],
   imports: [
     FormsModule,
@@ -116,7 +113,6 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
-    LoginProvider,
     ShoppingcartProvider,
     Facebook,
     HTTP
