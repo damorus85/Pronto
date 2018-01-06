@@ -1,0 +1,51 @@
+page-menu-item {
+
+    .amount {
+        height: 100%;
+        justify-content: center;
+
+        button {
+            font-size: 1.7em;  
+        }
+    }
+
+    .menu-time {
+        background-color: #dba800 !important;
+        color: #fff;
+        font-size: 1.6rem;
+        font-weight: bold;
+        border-radius: 2px;
+        padding: 11px;
+        margin-top: 15px;
+    }
+
+    button.controls {
+        font-size: 1.4em;
+    }
+
+    ion-content {
+        background-color: #e5e5e5 !important;
+    }
+
+    ion-card-header {
+        background-color: #79ccf2 !important;
+        color: #fff !important;
+    }
+
+    .card-title-ios {
+        font-size: 1.7em !important;
+    }
+}
+
+p.description {
+    color: #777;
+}
+
+p.allergies {    
+    span:after {
+        content: ', ';
+    }
+    span:last-child:after {
+        content : '';
+    }
+}

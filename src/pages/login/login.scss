@@ -1,0 +1,22 @@
+/**/
+#spashLogin {
+    height: 166px;
+    text-align: center;
+    margin-top: calc(30%);
+
+    h1 {
+        font-size: 4em;
+        margin-bottom: 10px !important;
+    }
+
+    p.ingress {
+        margin-top: 0px !important;
+        color: #fff;
+        font-style: italic;
+        font-size: 1.5em;
+    }
+
+    button.facebook-color {
+        background-color: #3b5998;
+    }
+}

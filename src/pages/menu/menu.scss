@@ -1,0 +1,26 @@
+page-menu {
+
+    div.menu-description {
+        opacity: .6;
+    }
+
+    .menu-time {
+        background-color: #dba800 !important;
+        color: #fff;
+    }
+
+    ion-card-header {
+        background-color: #434345 !important;
+        color: #fff !important;
+        padding: 11px !important;
+        font-weight: bold;
+
+        p {
+            color: #fff !important;
+        }
+    }
+    
+    ion-content ion-card:last-child {
+        margin-bottom: 80px;
+    }
+}

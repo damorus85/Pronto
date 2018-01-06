@@ -1,0 +1,78 @@
+<!--
+  Generated template for the RatingModalPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<div class="popup_window">
+  <div class="popup_window_content">
+
+    <ion-header>
+
+      <ion-navbar transparent>
+        <ion-title>Hva synes du?</ion-title>
+      </ion-navbar>
+
+    </ion-header>
+
+
+    <ion-content>
+
+      <!-- Service rating -->
+      <ion-card>
+        <ion-card-content>
+          <h2 text-center>Hva syntes du om servicen?</h2>
+          <div class="rating">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 text-center>&nbsp;</ion-col>
+                <ion-col col-2 text-center *ngFor="let number of [1,2,3,4,5]" (click)="setServiceRating(number)">
+                  <ion-icon name="star-outline" *ngIf="serviceRating < number" color="faded"></ion-icon>
+                  <ion-icon name="star" *ngIf="serviceRating >= number" color="star"></ion-icon>
+                </ion-col>
+                <ion-col col-1 text-center>&nbsp;</ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Food rating -->
+      <ion-card>
+        <ion-card-content>
+          <h2 text-center>Hva syntes du om maten?</h2>
+          <div class="rating">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-1 text-center>&nbsp;</ion-col>
+                <ion-col col-2 text-center *ngFor="let number of [1,2,3,4,5]" (click)="setFoodRating(number)">
+                  <ion-icon name="star-outline" *ngIf="foodRating < number" color="faded"></ion-icon>
+                  <ion-icon name="star" *ngIf="foodRating >= number" color="star"></ion-icon>
+                </ion-col>
+                <ion-col col-1 text-center>&nbsp;</ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Comment -->
+      <ion-card>
+        <ion-card-content>
+          <h2 text-center>Gi en kommentar</h2>
+          <form #commentForm="ngForm">
+            <ion-item padding>
+                <ion-textarea name="comment" placeholder="" (keyup)="setComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
+              </ion-item>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
+    </ion-content>
+
+    <ion-footer padding>
+      <button ion-button block (click)="saveRating()">Gi tilbakemelding</button>
+      <button ion-button block clear (click)="cancelRating()">Avslutt</button>
+    </ion-footer>
+  </div>
+</div>

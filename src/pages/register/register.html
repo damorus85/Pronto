@@ -1,0 +1,48 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar transparent>
+    <ion-title>Registrer deg</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <form #registerForm="ngForm" (submit)="doRegister(registerForm.value)">
+        <ion-list no-padding>
+          
+          <ion-item no-padding>
+            <ion-label stacked>Ditt navn</ion-label>
+            <ion-input type="text" name="fullname" (keyup)="checkValid(registerForm.value)" required ngModel></ion-input>
+          </ion-item>
+
+          <ion-item no-padding>
+            <ion-label stacked>E-post</ion-label>
+            <ion-input type="email" name="email" (keyup)="checkValid(registerForm.value)" required ngModel></ion-input>
+          </ion-item>
+            
+          <ion-item no-padding>
+            <ion-label stacked>Passord</ion-label>
+            <ion-input type="password" name="password" (keyup)="checkValid(registerForm.value)" required ngModel></ion-input>
+          </ion-item>
+
+          <ion-item no-padding>
+            <ion-label stacked>Gjenta</ion-label>
+            <ion-input type="password" name="repeat" (keyup)="checkValid(registerForm.value)" required ngModel></ion-input>
+          </ion-item>
+            
+        </ion-list>
+
+        <button ion-button block type="submit" [disabled]="!formValid">Registrer deg</button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

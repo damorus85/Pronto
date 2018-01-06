@@ -1,0 +1,134 @@
+<!--
+  Generated template for the MenuItemPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar transparent>
+    <ion-title>{{menuItem.label}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <!-- Info -->
+      <ion-card-title text-center>{{menuItem.label}}</ion-card-title>
+      <p class="description" text-center *ngIf="menuItem.description != ''">
+          {{menuItem.description}}
+          <br><br>
+      </p>
+
+      <!-- Icons -->
+      <p text-center *ngIf="menuItem.vegetarian == '1'" class="text-mantis">
+        <ion-icon name="leaf"></ion-icon> 
+        Vegetarisk rett
+      </p>
+      <p text-center *ngIf="menuItem.spicy == '1'" class="text-red">
+        <ion-icon name="flame"></ion-icon> 
+        Mild sterkhetsgrad
+      </p>
+      <p text-center *ngIf="menuItem.spicy == '2'" class="text-red">
+        <ion-icon name="flame"></ion-icon> 
+        <ion-icon name="flame"></ion-icon> 
+        Medium sterkhetsgrad
+      </p>
+      <p text-center *ngIf="menuItem.spicy == '3'" class="text-red">
+        <ion-icon name="flame"></ion-icon> 
+        <ion-icon name="flame"></ion-icon> 
+        <ion-icon name="flame"></ion-icon> 
+        Sterk sterkhetsgrad
+      </p>
+      
+
+      <p text-center class="allergies text-orange" *ngIf="allergies.length > 0">
+        <ion-icon name="warning"></ion-icon>
+        <span *ngFor="let allergy of allergies">{{allergy}}</span>
+      </p>
+
+      <div *ngIf="menu.active_start != '' && menu.active_start != null && menu.active_stop != '' && menu.active_stop != null && priceIsSet" class="menu-time" text-center>
+        Denne retten serveres mellom<br>{{menu.active_start}} og {{menu.active_stop}}
+      </div>
+
+      <!-- Checking if valid prices -->
+      <div *ngIf="priceIsSet">
+        <br>
+
+        <!-- Variants -->
+        <ion-list radio-group *ngIf="priceType == 'dynamic'" no-padding>
+          <ng-template ngFor let-variant [ngForOf]="variants" let-i="index">
+            <ion-item no-padding>
+              <ion-label>{{variant.variant}} - {{variant.price | priceFormat }}</ion-label>
+              <ion-radio value="{{variant.price}}" [checked]="variant == selectedVariant" (click)="selectVariant(variant)"></ion-radio>
+            </ion-item>
+          </ng-template>
+        </ion-list>
+
+        <!-- Amount -->
+        <ion-grid no-padding *ngIf="!isClosed">
+          <ion-row justify-content-center align-items-center>
+            <ion-col col-3>
+              <button class="controls" ion-button block (click)="decreaseAmount()">
+                <ion-icon name="remove"></ion-icon>
+              </button>
+            </ion-col>
+            <ion-col class="amount" col-6 text-center>
+              <button ion-button block clear >
+                {{amount}}
+              </button>
+            </ion-col>
+            <ion-col col-3>
+                <button class="controls" ion-button block (click)="increaseAmount()">
+                  <ion-icon name="add"></ion-icon>
+                </button>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- Total -->
+        <ion-grid no-padding>
+          <ion-row justify-content-center align-items-center>
+            <ion-col col-12 text-center class="box">
+              {{currentPrice | priceFormat}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <!-- Doneness -->
+        <ion-list radio-group *ngIf="menuItem.doneness == '1'" no-padding>
+          <ng-template ngFor let-doneness [ngForOf]="customer.doneness">
+            <ion-item no-padding>
+              <ion-label>{{doneness}}</ion-label>
+              <ion-radio value="{{doneness}}" [checked]="variant == selectedVariant" (click)="selectDoneness(doneness)"></ion-radio>
+            </ion-item>
+          </ng-template>
+        </ion-list>
+
+        <!-- Add to cart -->
+        <button ion-button block (click)="addTOCart()" *ngIf="!isClosed">Legg til bestillingen</button>
+        
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- Shopping cart -->
+<ion-footer class="dark" *ngIf="cartTotal > 0" (click)="gotoCart()">
+  <ion-grid padding>
+    <ion-row>
+      <ion-col col-5 text-center>
+        Din bestilling ({{cartAmount}})
+      </ion-col>
+      <ion-col col-6 text-center>
+        {{cartTotal | priceFormat}}
+      </ion-col>
+      <ion-col col-1 text-center>
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
