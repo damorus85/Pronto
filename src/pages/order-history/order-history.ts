@@ -5,6 +5,9 @@ import { Storage } from '@ionic/storage';
 // Self made providers
 import { ApiProvider } from '../../providers/api/api';
 
+// Self made pages
+import { OrderHistoryListPage } from '../../pages/order-history-list/order-history-list';
+
 /**
  * Generated class for the OrderHistoryPage page.
  *
@@ -52,7 +55,6 @@ export class OrderHistoryPage {
         serviceuserid : user.serviceuserid
       }).subscribe((data) => {
         this.orderhistory = data.data;
-        console.log(this.orderhistory);
         loading.dismiss();
       });
     });
@@ -62,6 +64,22 @@ export class OrderHistoryPage {
   refreshOrderHistory(refresher){
     this.loadOrderHistory().then(() => {
       refresher.complete();
+    });
+  }
+
+  // Navigating to the order history list page
+  gotoCustomerDay(company, customerid, year, month, day){
+
+    // Creating the date
+    month = (month < 10) ? '0' + month : month;
+    day = (day < 10) ? '0' + day : day;
+    let date = year + '-' + month + '-' + day;
+
+    // Goto order history list
+    this.navCtrl.push(OrderHistoryListPage, {
+      company : company,
+      customerid : customerid,
+      date : date
     });
   }
 }

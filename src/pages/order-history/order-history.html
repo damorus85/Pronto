@@ -19,8 +19,14 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <template *ngFor="let month of orderhistory">
-    <h2>{{month.month}} {{month.year}}</h2>
-  </template>
+  <ion-card *ngFor="let month of orderhistory">
+    <ion-card-header>{{month.month}} {{month.year}}</ion-card-header>
+    <ion-list *ngFor="let customer of month.customers">
+      <button ion-item (click)="gotoCustomerDay(customer.company, customer.customerid, customer.year, customer.month, customer.day)">
+        {{customer.company}}
+        <p>{{customer.dateFormated}}</p>
+      </button>
+    </ion-list>
+  </ion-card>
 
 </ion-content>

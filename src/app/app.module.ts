@@ -14,7 +14,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Facebook } from '@ionic-native/facebook';
-import { HTTP } from '@ionic-native/http';
 
 // Self made providers
 import { ApiProvider } from '../providers/api/api';
@@ -40,6 +39,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ShoppingcartPage } from '../pages/shoppingcart/shoppingcart';
 import { OrdersPage } from '../pages/orders/orders';
 import { OrderHistoryPage } from '../pages/order-history/order-history';
+import { OrderHistoryListPage } from '../pages/order-history-list/order-history-list';
 import { OrderDetailsPage } from '../pages/order-details/order-details';
 
 // Modal pages
@@ -69,6 +69,7 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     OrdersPage,
     OrderDetailsPage,
     OrderHistoryPage,
+    OrderHistoryListPage,
     PriceFormatPipe,
   ],
   imports: [
@@ -105,6 +106,7 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     ShoppingcartPage,
     OrdersPage,
     OrderHistoryPage,
+    OrderHistoryListPage,
     OrderDetailsPage
   ],
   providers: [
@@ -114,8 +116,7 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
     ShoppingcartProvider,
-    Facebook,
-    HTTP
+    Facebook
   ]
 })
 export class AppModule {}
