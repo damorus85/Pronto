@@ -20,7 +20,8 @@ import { ApiProvider } from '../providers/api/api';
 import { ShoppingcartProvider } from '../providers/shoppingcart/shoppingcart';
 
 // Self made pipes
-import { PriceFormatPipe } from '../pipes/price-format/price-format';
+//import { PriceFormatPipe } from '../pipes/price-format/price-format';
+import { PipesModule } from '../pipes/pipes.module';
 
 // Pages
 import { SplashPage } from '../pages/splash/splash';
@@ -70,11 +71,11 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     OrderDetailsPage,
     OrderHistoryPage,
     OrderHistoryListPage,
-    PriceFormatPipe,
   ],
   imports: [
     FormsModule,
     HttpModule,
+    PipesModule,
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       platforms:{
