@@ -122,7 +122,10 @@ export class LoginPage {
         });
         alertController.present();
       }
-    }).catch(e => console.log('Error logging into Facebook', e));
+    }).catch((e) => {
+      alert("Feil med facebook login " + e);
+      console.log('Error logging into Facebook', e)
+    });
   }
 
   // Fetching facebook user defails
