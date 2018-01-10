@@ -123,6 +123,10 @@ export class LoginPage {
         alertController.present();
       }
     }).catch((e) => {
+
+      // Closing the loading
+      this.facebookLoading.dismiss();
+      
       alert("Feil med facebook login " + e);
       console.log('Error logging into Facebook', e)
     });
