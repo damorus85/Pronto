@@ -13,24 +13,30 @@
 </ion-header>
 
 
-<ion-content padding>
-  <form #forgottenForm="ngForm" (submit)="doForgotten(forgottenForm.value)">
-    <ion-list no-padding>
-      
-      <ion-item no-padding>
-        <ion-label floating>Din e-post</ion-label>
-        <ion-input type="email" name="email" placeholder="" (keyup)="checkValid(forgottenForm.value)" required ngModel></ion-input>
-      </ion-item>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <p>Har du glemt passordet? Skriv inn din epost under så sender vi deg en kode du kan bruke for å resette ditt passord<br><br></p>
+
+      <form #forgottenForm="ngForm" (submit)="doForgotten(forgottenForm.value)">
+        <ion-list no-padding>
+          
+          <ion-item no-padding>
+            <ion-label stacked>Din e-post</ion-label>
+            <ion-input type="email" name="email" (keyup)="checkValid(forgottenForm.value)" required ngModel></ion-input>
+          </ion-item>
+            
+        </ion-list>
+
+        <button ion-button block type="submit" [disabled]="!formValid">Send meg nytt passord</button>
         
-    </ion-list>
+      </form>
 
-    <button ion-button block type="submit" [disabled]="!formValid">Send meg nytt passord</button>
-    
-  </form>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col col-12><button ion-button block clear (click)="gotoReset()">Skriv inn kode</button></ion-col>
-    </ion-row>
-  </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12><button ion-button block clear (click)="gotoReset()">Skriv inn kode</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

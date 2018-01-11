@@ -8,7 +8,7 @@
 
   <ion-navbar transparent>
     <ion-title>Din profil</ion-title>
-    <ion-buttons end *ngIf="user.facebook_userid == '' || facebook_userid == null">
+    <ion-buttons end *ngIf="user.facebook_userid == '' || user.facebook_userid == null">
       <button ion-button class="white" *ngIf="!editMode" (click)="toggleEdit()">
         Edit&egrave;r
       </button>
@@ -28,7 +28,10 @@
     <ion-card-header>
       {{user.fullname}}
     </ion-card-header>
-    <ion-card-content>{{user.email}}</ion-card-content>
+    <ion-card-content>
+      {{user.email}}
+      <p *ngIf="user.facebook_userid != '' && user.facebook_userid != null">Registrert via Facebook</p>
+    </ion-card-content>
   </ion-card>
 
   <!-- Edit profile view -->

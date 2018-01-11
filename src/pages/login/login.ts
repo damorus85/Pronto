@@ -69,7 +69,7 @@ export class LoginPage {
     // Fetching login from API
     this.apiProvider.get('/user/login', {
       email : values.email,
-      password : values.password
+      password : (values.password)
     }).subscribe((data) => {
 
       // Closing the loading
@@ -108,7 +108,7 @@ export class LoginPage {
       if(res.status === "connected") {
 
         // Fetching the user details via the facebook GRAPH API
-        this.getFacebookUserDetail(res.authResponse.userID);
+        this.getFacebookUserDetail();
       } else {
 
         // Closing the loading
@@ -127,35 +127,43 @@ export class LoginPage {
       // Closing the loading
       this.facebookLoading.dismiss();
       
-      alert("Feil med facebook login " + e);
+      alert("Feil med facebook login " + e + " - " + JSON.stringify(e, null, 4));
       console.log('Error logging into Facebook', e)
     });
   }
 
   // Fetching facebook user defails
-  public getFacebookUserDetail(userid) {
-    this.facebook.api("/" + userid + "/?fields=id,email,name,",["public_profile"]).then(res => {
+  public getFacebookUserDetail() {
+    this.facebook.api('me?fields=id,name,email',[]).then(res => {
         
-      // Closing the loading
-      this.facebookLoading.dismiss();
-      var string = "";
+      // Sending the post data to the API
+      this.apiProvider.post('/user/facebooklogin', res).subscribe((data) => {
 
-      for(var key in res){
-        string += key + ": " + res[key] + "<br>";
-      }
-      let alertController = this.alertController.create({
-        title : "Verdier!",
-        message : string,
-        buttons: ['OK']
+        // Closing the loading
+        this.facebookLoading.dismiss();
+
+        // Checking response status
+        if(data.status !== true){
+
+          // Invalid login
+          let alertController = this.alertController.create({
+            title : "Feil under p&aring;logging!",
+            message : "Melding: " + data.message,
+            buttons: ['OK']
+          });
+          alertController.present();
+        } else {
+
+          // Saving the user id and redirecting
+          this.storage.set('pronto-user', data.data);
+          this.navCtrl.setRoot(ScanPage);
+        }
       });
-      alertController.present();
-      console.log(res);
-        
     }).catch(e => {
 
       // Closing the loading
       this.facebookLoading.dismiss();
-
+      alert(JSON.stringify(e, null, 4));
       console.log(e);
     });
   }
