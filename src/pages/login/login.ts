@@ -11,6 +11,7 @@ import { ForgottenPage } from '../../pages/forgotten/forgotten';
 import { ScanPage } from '../../pages/scan/scan';
 
 import { Storage } from '@ionic/storage';
+import { ShowWhen } from 'ionic-angular/components/show-hide-when/show-when';
 /**
  * Generated class for the LoginPage page.
  *
@@ -127,8 +128,19 @@ export class LoginPage {
       // Closing the loading
       this.facebookLoading.dismiss();
       
-      alert("Feil med facebook login " + e + " - " + JSON.stringify(e, null, 4));
-      console.log('Error logging into Facebook', e)
+      // Checking if use cancelled
+      var showException = true;
+      if (typeof e.errorCode !== 'undefined') {
+        if(e.errorCode == '4201'){ // User cancelled the operation
+          showException = false;
+        }
+      }
+
+      // Checking exception
+      if(showException){
+        alert("Feil med facebook login: " + JSON.stringify(e, null, 4));
+        console.log('Error logging into Facebook', e)
+      }
     });
   }
 
