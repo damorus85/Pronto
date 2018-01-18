@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 // Self made providers
 import { ApiProvider } from '../../providers/api/api';
@@ -33,6 +34,7 @@ export class ShoppingcartPage {
   public tablenumber;
 
   constructor(
+    private keyboard: Keyboard,
     public storage: Storage,
     public toastController: ToastController,
     private shoppingcart: ShoppingcartProvider,
@@ -46,6 +48,9 @@ export class ShoppingcartPage {
       this.storage.get('pronto-sc').then((sc) => this.customer = sc);
       this.storage.get('pronto-tid').then((tid) => this.tablenumber = tid);
       this.storage.get('pronto-user').then((user) => this.user = user);
+
+      // Showing the keyboard controls menu
+      this.keyboard.hideKeyboardAccessoryBar(false);
   }
 
   // Loading the cart

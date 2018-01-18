@@ -66,7 +66,8 @@ export class HomePage {
     // Have orders
     return this.storage.get('pronto-user').then((user) => {
       this.apiProvider.get('/order/getuserdayorders', {
-        id : user['serviceuserid']
+        id : user['serviceuserid'],
+        customerid : this.customer['customerid']
       }).subscribe((data) => {
         if(data.status == true){
           if(data.data.length > 0){

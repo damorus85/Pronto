@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Facebook } from '@ionic-native/facebook';
+import { Keyboard } from '@ionic-native/keyboard';
 
 // Self made providers
 import { ApiProvider } from '../providers/api/api';
@@ -117,7 +118,8 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
     ShoppingcartProvider,
-    Facebook
+    Facebook,
+    Keyboard
   ]
 })
 export class AppModule {}

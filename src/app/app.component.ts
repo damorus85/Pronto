@@ -54,10 +54,11 @@ export class MyApp {
                 if(scdate != null){
                   let now = Date.now();
                   if((now - scdate) > 28800000){
+                    this.storage.remove('pronto-tid');
                     this.storage.remove('pronto-sc');
                     this.storage.remove('pronto-sc-date');
-                    this.storage.remove('pronto-tid');
                     this.storage.remove('pronto-cart');
+                    this.storage.remove('pronto-cart-comment');
 
                     // Navigating to scan page
                     this.rootPage = ScanPage;

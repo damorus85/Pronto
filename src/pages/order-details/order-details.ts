@@ -20,7 +20,6 @@ export class OrderDetailsPage {
   public orderid;
   public order = {};
   public orderStatuses = [];
-  public date;
 
   // Start up constructor
   constructor(
@@ -52,9 +51,6 @@ export class OrderDetailsPage {
       id : this.orderid
     }).subscribe((data) => {
       loading.dismiss();
-
-      let date = new Date(data.data['date_created']);
-      this.date = date.getDate() + '.' + ( date.getMonth() + 1) + '.' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
       
       this.order = data.data;
       if(refresher != null){

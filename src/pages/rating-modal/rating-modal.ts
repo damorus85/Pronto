@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Keyboard } from '@ionic-native/keyboard';
 
 // Self made providers
 import { ApiProvider } from '../../providers/api/api';
@@ -31,6 +32,7 @@ export class RatingModalPage {
 
   // Constructor
   constructor(
+    private keyboard: Keyboard,
     private apiProvider: ApiProvider,
     private loadingController: LoadingController,
     private alertController : AlertController,
@@ -41,6 +43,9 @@ export class RatingModalPage {
       // Getting the selected customer and user
       this.storage.get('pronto-sc').then((sc) => this.customer = sc);
       this.storage.get('pronto-user').then((user) => this.user = user);
+
+      // Showing the keyboard controls menu
+      this.keyboard.hideKeyboardAccessoryBar(false);
   }
 
   // Setting the service rating
@@ -125,12 +130,7 @@ export class RatingModalPage {
         }
       });
 
-      // Clearing table number and customer
-      this.storage.remove('pronto-tid');
-      this.storage.remove('pronto-sc');
-      this.storage.remove('pronto-sc-date');
-      this.storage.remove('pronto-cart');
-      this.storage.remove('pronto-cart-comment');
+      this.removeStorage();
     }
   }
 
@@ -152,6 +152,7 @@ export class RatingModalPage {
           {
             text: 'Avslutt besøk',
             handler: () => {
+              this.removeStorage();
               this.navCtrl.setRoot(ScanPage);
             }
           }
@@ -159,7 +160,19 @@ export class RatingModalPage {
       });
       alert.present();
     } else {
+      this.removeStorage();
       this.navCtrl.setRoot(ScanPage);
     }
+  }
+
+  // Clearing the storage besides the login
+  public removeStorage(){
+
+    // Clearing table number and customer
+    this.storage.remove('pronto-tid');
+    this.storage.remove('pronto-sc');
+    this.storage.remove('pronto-sc-date');
+    this.storage.remove('pronto-cart');
+    this.storage.remove('pronto-cart-comment');
   }
 }
