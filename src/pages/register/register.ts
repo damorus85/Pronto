@@ -102,7 +102,7 @@ export class RegisterPage {
         } else {
 
           // Saving the user id and redirecting
-          this.storage.set('pronto-uid', data.data.serviceuserid);
+          this.storage.set('pronto-user', data.data);
           this.navCtrl.setRoot(ScanPage);
         }
       }, error => {
