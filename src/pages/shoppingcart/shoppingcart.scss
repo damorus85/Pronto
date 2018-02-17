@@ -1,4 +1,5 @@
 page-shoppingcart {
+
     ion-content {
         background-color: #e5e5e5 !important;
     }
@@ -6,5 +7,18 @@ page-shoppingcart {
     ion-card-header {
         background-color: #79ccf2 !important;
         color: #fff !important;
+    }
+
+    .softpayment_wrapper {
+
+        .heading {
+            font-weight: bold;
+            display: block;
+            margin: 15px 0;
+        }
+    }
+
+    .totals {
+        font-size: 1.1em;
     }
 }

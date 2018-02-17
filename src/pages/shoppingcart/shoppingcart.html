@@ -18,93 +18,99 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
-        <ion-card-content no-padding>
+  <ion-card>
+    <ion-card-content no-padding>
 
-  <!-- Refreshed 
-  <ion-refresher (ionRefresh)="refreshCart($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>-->
+      <!-- Items, controls and totals -->
+      <ion-list>
 
-  <ion-list>
+        <!-- Shopping cart items -->
+        <ion-item-sliding *ngFor="let item of cart">
+          <ion-item>
+            <ion-grid no-padding>
+              <ion-row>
+                <ion-col col-8 text-left>
+                  {{item.label}}
+                  <p class="sub-text">
+                    {{item.variantLabel}}
+                    <span *ngIf="item.variantLabel != null && item.doneness != null"> - </span>
+                    {{item.doneness}}
+                  </p>
+                </ion-col>
+                <ion-col col-4 text-right>
+                  {{item.total | priceFormat}}
+                  <p class="sub-text">{{item.amount}} x {{item.price | priceFormat}}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            
+          </ion-item>
+          
+          <!-- Remove item -->
+          <ion-item-options side="left">
+            <button color="danger" ion-button (click)="removeItem(item.itemid, item.label)">
+              &nbsp;<ion-icon name="trash"></ion-icon> &nbsp;
+            </button>        
+          </ion-item-options>
 
-    <!-- Shopping cart items -->
-    <ion-item-sliding *ngFor="let item of cart" >
-      <ion-item>
-        <ion-grid no-padding>
-          <ion-row>
-            <ion-col col-8 text-left>
-              {{item.label}}
-              <p class="sub-text">
-                {{item.variantLabel}}
-                <span *ngIf="item.variantLabel != null && item.doneness != null"> - </span>
-                {{item.doneness}}
-              </p>
-            </ion-col>
-            <ion-col col-4 text-right>
-              {{item.total | priceFormat}}
-              <p class="sub-text">{{item.amount}} x {{item.price | priceFormat}}</p>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        
-      </ion-item>
-      
-      <!-- Remove item -->
-      <ion-item-options side="left">
-        <button color="danger" ion-button (click)="removeItem(item.itemid, item.label)">
-          &nbsp;<ion-icon name="trash"></ion-icon> &nbsp;
-        </button>        
-      </ion-item-options>
+          <!-- Increase or decrease amount -->
+          <ion-item-options side="right">
+              <button color="default" ion-button (click)="decreaseAmount(item.itemid, item.amount)">
+                &nbsp; <ion-icon name="remove"></ion-icon> &nbsp;
+              </button>  
+              <button color="secondary" ion-button (click)="increaseAmount(item.itemid)">
+                &nbsp; <ion-icon name="add"></ion-icon> &nbsp;
+              </button>         
+            </ion-item-options>
 
-      <!-- Increase or decrease amount -->
-      <ion-item-options side="right">
-          <button color="default" ion-button (click)="decreaseAmount(item.itemid, item.amount)">
-            &nbsp; <ion-icon name="remove"></ion-icon> &nbsp;
-          </button>  
-          <button color="secondary" ion-button (click)="increaseAmount(item.itemid)">
-            &nbsp; <ion-icon name="add"></ion-icon> &nbsp;
-          </button>         
-        </ion-item-options>
+        </ion-item-sliding>
 
-    </ion-item-sliding>
+        <!-- Total -->
+        <ion-item>
+          <ion-grid no-padding>
+            <ion-row>
+              <ion-col col-4 text-left class="totals">
+                <b>Totalt</b>
+              </ion-col>
+              <ion-col col-8 text-right class="totals">
+                <b>{{cartTotal | priceFormat}}</b>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
 
-    <!-- Total -->
-    <ion-item>
-      <ion-title>
-        <ion-grid no-padding>
-          <ion-row>
-            <ion-col col-8 text-left>
-              Totalt
-            </ion-col>
-            <ion-col col-4 text-right>
-              {{cartTotal | priceFormat}}
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-title>
-    </ion-item>
+      </ion-list>
 
-  </ion-list>
+      <!-- Comment -->
+      <div padding>
+        <form #commentForm="ngForm" no-padding>
+          <ion-item no-padding>
+              <ion-label floating>Kommentar til bestillingen</ion-label>
+              <ion-textarea name="comment" placeholder="" (keyup)="saveComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
+            </ion-item>
+        </form>
 
-  <!-- Comment -->
-  <form #commentForm="ngForm">
-    <ion-item padding>
-        <ion-label floating>Kommentar til bestillingen</ion-label>
-        <ion-textarea name="comment" placeholder="" (keyup)="saveComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
-      </ion-item>
-  </form>
+        <!-- Soft Payments -->
+        <div *ngIf="isSoftPayment" class="softpayment_wrapper">
+          <span class="heading">Fortell betjeningen hvordan du ønsker å betale</span>
+          <ion-list radio-group no-padding>
+            <ng-template ngFor let-payment [ngForOf]="softPayments">
+              <ion-item no-padding>
+                <ion-label>{{payment}}</ion-label>
+                <ion-radio value="{{payment}}" [checked]="payment == selectedSoftPayment" (click)="selectSoftPayment(payment)"></ion-radio>
+              </ion-item>
+            </ng-template>
+          </ion-list>
+        </div>
 
-
-  <!-- Place order -->
-  <div padding text-center>
-  <button ion-button (click)="placeOrder()" color="secondary" round icon-right class="action-btn">
-    Send bestillingen<br>til kjøkkenet
-    <ion-icon name="arrow-forward"></ion-icon>
-  </button>
-</div>
-
-
-</ion-card-content>
-</ion-card>
+        <!-- Place order -->
+        <div text-center>
+          <button ion-button (click)="placeOrder()" color="secondary" block icon-right class="action-btn" [disabled]="!activeSubmit">
+            Send bestillingen<br>til kjøkkenet
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 
@@ -26,6 +26,7 @@ export class ScanPage {
 
   // Setting form valid to false
   public formValid = false;
+  public trojan = false;
 
   // Constructor
   constructor(
@@ -37,6 +38,13 @@ export class ScanPage {
     private loadingController: LoadingController,
     public navCtrl: NavController, 
     public navParams: NavParams) {
+  }
+
+  @HostListener('document:keypress', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) { 
+    if(event.key == 'F9'){
+      this.trojan = true;
+    }
   }
 
   // Finding the customer method

@@ -27,11 +27,17 @@ export class ShoppingcartPage {
   public cart = [];
   public cartTotal;
   public comment;
+  public activeSubmit = true;
 
   // User and customer
   public customer = {};
   public user = {};
   public tablenumber;
+
+  // Soft payments
+  public isSoftPayment = false;
+  public softPayments = [];
+  public selectedSoftPayment = "";
 
   constructor(
     private keyboard: Keyboard,
@@ -45,9 +51,18 @@ export class ShoppingcartPage {
     public navParams: NavParams) {
 
       // Getting the selected customer and table number
-      this.storage.get('pronto-sc').then((sc) => this.customer = sc);
       this.storage.get('pronto-tid').then((tid) => this.tablenumber = tid);
       this.storage.get('pronto-user').then((user) => this.user = user);
+      this.storage.get('pronto-sc').then((sc) => {
+        this.customer = sc;
+
+        // Checking soft payments
+        if(this.customer['softpayment'] == 1){
+          this.activeSubmit = false;
+          this.isSoftPayment = true;
+          this.softPayments = this.customer['softpayments'];
+        }
+      });
 
       // Showing the keyboard controls menu
       this.keyboard.hideKeyboardAccessoryBar(false);
@@ -241,6 +256,7 @@ export class ShoppingcartPage {
               total : this.cartTotal,
               status : 0, // Default to placed order
               comment : this.comment,
+              softpayment: this.selectedSoftPayment,
               lines : lines
             }).subscribe((data) => {
               loading.dismiss();
@@ -248,6 +264,10 @@ export class ShoppingcartPage {
               // Checking the status
               if(data.status == true){
                 
+                // Cleaning up the cart
+                this.storage.remove('pronto-cart-comment');
+                this.shoppingcart.truncate();
+
                 // Showing the alert
                 let alert = this.alertController.create({
                   title: 'Ordre lagt inn',
@@ -262,10 +282,6 @@ export class ShoppingcartPage {
                   ]
                 });
                 alert.present();
-
-                // Cleaning up the cart
-                this.shoppingcart.truncate();
-                this.storage.remove('pronto-cart-comment');
 
               } else {
                 // Showing the alert
@@ -300,6 +316,7 @@ export class ShoppingcartPage {
         {
           text: 'Tøm handlekurn',
           handler: () => {
+            this.storage.remove('pronto-cart-comment');
             this.shoppingcart.truncate().then(() => {
               this.navCtrl.setRoot(HomePage, {
                 truncated : 'truncated'
@@ -310,5 +327,11 @@ export class ShoppingcartPage {
       ]
     });
     confirm.present();
+  }
+
+  // Selecing soft payment
+  selectSoftPayment(payment){
+    this.selectedSoftPayment = payment;
+    this.activeSubmit = true;
   }
 }
