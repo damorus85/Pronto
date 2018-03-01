@@ -59,6 +59,10 @@ export class HomePage {
   }
 
   public loadHomePage(){
+    // Default values
+    this.haveOrders = false;
+    this.haveUnfinishedOrders = false;
+
     // Shopping total and amount
     this.shoppingcart.getTotalPrice().then((total) => this.cartTotal = total);
     this.shoppingcart.getTotalAmount().then((amount) => this.cartAmount = amount);
@@ -300,6 +304,70 @@ export class HomePage {
             // Opening the modal page
             let modal = this.modalController.create(RatingModalPage);
             modal.present();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  // Get the check and closing the visit
+  getTheCheckAndcloseVisit(){
+
+    // Presenting the confirm
+    let confirm = this.alertController.create({
+      title: 'Avslutte besøket?',
+      message: 'Er du sikker p&aring; at du vil be om regningen og avslutte besøket?',
+      buttons: [
+        {
+          text: 'Avbryt',
+          role: 'cancel'
+        },
+        {
+          text: 'Be om regningen',
+          handler: () => {
+            
+            // Starting the loading
+            let loading = this.loadingController.create({
+              content : "Laster vennligst vent..."
+            });
+            loading.present();
+
+            // Inserting the callout for waiter
+            this.apiProvider.post('/customer/callout', {
+              customerid : this.customer['customerid'],
+              serviceuserid : this.user['serviceuserid'],
+              tablenumber : this.tablenumber,
+              type : 'getthecheck',
+              status : 0
+            }).subscribe((data) => {
+              loading.dismiss();
+
+              if(data.status == true){
+                
+                // Success message
+                let toast = this.toastController.create({
+                  message: 'Betjeningen er tilkallt om regningen',
+                  duration: 2000,
+                  position: 'bottom'
+                });
+                toast.present();
+                
+                // Opening the modal page
+                let modal = this.modalController.create(RatingModalPage);
+                modal.present();
+
+              } else {
+
+                // Error message
+                let alert = this.alertController.create({
+                  title: 'Noe skjedde!',
+                  message: 'Det oppstod noen problemer med tilkallingen av regningen, vennligst prøv igjen',
+                  buttons: ['OK']
+                });
+                alert.present();
+              }
+            });
           }
         }
       ]

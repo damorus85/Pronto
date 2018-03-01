@@ -57,11 +57,21 @@
       </div>
 
       <!-- Get the check -->
+      <!--
       <div class="grid-item" *ngIf="haveOrders" text-center>
         <button ion-button big (click)="getTheCheck()" large>
           <ion-icon name="card"></ion-icon>
         </button>
         <div>Be om regningen</div>
+      </div>
+      -->
+
+      <!-- Change table -->
+      <div class="grid-item" text-center>
+        <button ion-button (click)="changeTableNumber()" large>
+            <ion-icon name="flag"></ion-icon>
+        </button>     
+        <div>Bytte bordnummer</div>
       </div>
 
       <!-- Your orders -->
@@ -72,20 +82,20 @@
         <div>Dine bestillinger</div>
       </div>
 
-      <!-- Change table -->
-      <div class="grid-item" text-center>
-        <button ion-button (click)="changeTableNumber()" large>
-            <ion-icon name="flag"></ion-icon>
-        </button>     
-        <div>Bytte bordnummer</div>
-      </div>
-
       <!-- Finish visit -->
-      <div class="grid-item" text-center>
+      <div class="grid-item" *ngIf="customer.softpayment == 1 || !haveOrders" [ngClass]="{'grid-item-center': haveOrders}" text-center>
         <button color="secondary" ion-button (click)="closeVisit()" large>
           <ion-icon name="walk"></ion-icon>
         </button>    
         <div>Avslutt bes&oslash;ket</div>
+      </div>
+
+      <!-- Get the check and finish visit -->
+      <div class="grid-item grid-item-center" *ngIf="haveOrders && customer.softpayment == 0" text-center>
+        <button color="secondary" ion-button (click)="getTheCheckAndcloseVisit()" large>
+          <ion-icon name="walk"></ion-icon>
+        </button>    
+        <div>Be om regningen og avslutt bes&oslash;ket</div>
       </div>
 
     </div>

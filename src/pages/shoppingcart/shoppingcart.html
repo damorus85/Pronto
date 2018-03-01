@@ -81,18 +81,30 @@
 
       </ion-list>
 
-      <!-- Comment -->
-      <div padding>
-        <form #commentForm="ngForm" no-padding>
-          <ion-item no-padding>
-              <ion-label floating>Kommentar til bestillingen</ion-label>
-              <ion-textarea name="comment" placeholder="" (keyup)="saveComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
-            </ion-item>
-        </form>
+    </ion-card-content>
+  </ion-card>
 
-        <!-- Soft Payments -->
-        <div *ngIf="isSoftPayment" class="softpayment_wrapper">
-          <span class="heading">Fortell betjeningen hvordan du ønsker å betale</span>
+  <ion-title>Kommentar til bestillingen</ion-title>
+  <ion-card>
+    <ion-card-content>
+
+      <!-- Comment -->
+      <form #commentForm="ngForm" no-padding>
+        <ion-item no-padding>
+          <ion-textarea name="comment" placeholder="Din kommentar" (keyup)="saveComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
+        </ion-item>
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+  
+  <!-- Soft Payments -->
+  <div *ngIf="isSoftPayment">
+    <ion-title>Ønsket betalingsmåte</ion-title>
+    <ion-card *ngIf="isSoftPayment">
+      <ion-card-content>
+        
+        <div class="softpayment_wrapper">
           <ion-list radio-group no-padding>
             <ng-template ngFor let-payment [ngForOf]="softPayments">
               <ion-item no-padding>
@@ -102,15 +114,17 @@
             </ng-template>
           </ion-list>
         </div>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+        
+  <!-- Place order -->
+  <div text-center padding>
+    <button ion-button (click)="placeOrder()" color="secondary" block icon-right class="action-btn" [disabled]="!activeSubmit">
+      Send bestillingen<br>til kjøkkenet
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </div>
 
-        <!-- Place order -->
-        <div text-center>
-          <button ion-button (click)="placeOrder()" color="secondary" block icon-right class="action-btn" [disabled]="!activeSubmit">
-            Send bestillingen<br>til kjøkkenet
-            <ion-icon name="arrow-forward"></ion-icon>
-          </button>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
 </ion-content>

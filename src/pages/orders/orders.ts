@@ -35,7 +35,8 @@ export class OrdersPage {
       // Setting the statuses
       this.orderStatuses[0] = 'Lagt inn';
       this.orderStatuses[1] = 'Behandlet';
-      this.orderStatuses[2] = 'Levert';
+      this.orderStatuses[2] = 'Servert';
+      this.orderStatuses[3] = 'Betalt';
   }
 
   // Loading the orders

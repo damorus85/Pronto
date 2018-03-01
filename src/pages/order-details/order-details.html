@@ -40,6 +40,7 @@
           <span class="" *ngIf="order.status == 0">{{orderStatuses[order.status]}}</span>
           <span class="text-orange" *ngIf="order.status == 1">{{orderStatuses[order.status]}}</span>
           <span class="text-mantis" *ngIf="order.status == 2">{{orderStatuses[order.status]}}</span>
+          <span class="text-mantis" *ngIf="order.status == 3">{{orderStatuses[order.status]}}</span>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="order.softpayment != ''">
