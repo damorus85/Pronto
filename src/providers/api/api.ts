@@ -9,7 +9,7 @@ import 'rxjs/add/operator/map';
   and Angular DI.
 */
 //const API_BASE_PATH: string = "http://localhost:8999/api";
-const API_BASE_PATH: string = "http://www.prontoportals.no/api";
+const API_BASE_PATH: string = "https://www.prontoportals.no/api";
 @Injectable()
 export class ApiProvider {
 
