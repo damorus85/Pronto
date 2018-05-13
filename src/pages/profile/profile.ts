@@ -38,6 +38,13 @@ export class ProfilePage {
       this.storage.get('pronto-user').then((user) => this.user = user);
   }
 
+  public ionViewWillEnter(){
+    alert(1);
+    this.apiProvider.get("/user/getserverinfo").subscribe(result => {
+      console.log(result);
+    });
+  }
+
   // Toggling edit mode
   public toggleEdit(){
     this.editMode = !this.editMode;

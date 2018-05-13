@@ -93,8 +93,9 @@ export class MenuPage {
 
     // Fetching the filters
     return this.storage.get('pronto-filters-allergies').then((allergies) => {
+      
       this.allergies = (allergies != null) ? allergies : [];
-
+      
       // Fetching the menu items
       return this.apiProvider.get("/customer/menuitemsgrouped", {
         id : this.customermenuid,

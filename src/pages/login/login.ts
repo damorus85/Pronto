@@ -11,7 +11,7 @@ import { ForgottenPage } from '../../pages/forgotten/forgotten';
 import { ScanPage } from '../../pages/scan/scan';
 
 import { Storage } from '@ionic/storage';
-import { ShowWhen } from 'ionic-angular/components/show-hide-when/show-when';
+//import { ShowWhen } from 'ionic-angular/components/show-hide-when/show-when';
 /**
  * Generated class for the LoginPage page.
  *
@@ -88,8 +88,13 @@ export class LoginPage {
         alertController.present();
       } else {
 
-        // Saving the user id and redirecting
+        // Saving the user
         this.storage.set('pronto-user', data.data);
+
+        // Saving the allergies
+        this.storage.set('pronto-filters-allergies', data.data['allergies']);
+
+        // Redirecting
         this.navCtrl.setRoot(ScanPage);
       }
     });
@@ -166,8 +171,13 @@ export class LoginPage {
           alertController.present();
         } else {
 
-          // Saving the user id and redirecting
+          // Saving the user
           this.storage.set('pronto-user', data.data);
+
+          // Saving the allergies
+          this.storage.set('pronto-filters-allergies', data.data['allergies']);
+
+          // Redirecting
           this.navCtrl.setRoot(ScanPage);
         }
       });

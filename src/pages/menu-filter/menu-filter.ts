@@ -19,6 +19,8 @@ import { ApiProvider } from '../../providers/api/api';
 export class MenuFilterPage {
 
   // Public values
+  public haveChanged = false;
+  public user = {};
   public allergies = [];
   public selectedAllergies = [];
   public placeHolderAllergies = [];
@@ -32,6 +34,9 @@ export class MenuFilterPage {
     private alertController : AlertController,
     public navCtrl: NavController, 
     public navParams: NavParams) {
+
+      // Fetching the user
+      this.storage.get('pronto-user').then((user) => this.user = user);
 
       // Getting the selected filters
       this.storage.get('pronto-filters-allergies').then((allergies) => {
@@ -87,13 +92,67 @@ export class MenuFilterPage {
     // Saving the selected filters
     this.storage.remove('pronto-filters-allergies').then(() => {
       this.storage.set('pronto-filters-allergies', this.selectedAllergies);
+      this.haveChanged = true;
     });
   }
 
   // Closing the filters
   closeFilters(){
-    this.navCtrl.pop().then(() => {
-      this.events.publish('filters-set');
-    });
+
+    // Checking if allergies have changed
+    if(this.haveChanged){
+
+      // Starting the loading
+      let loading = this.loadingController.create({
+        content : "Laster, vennligst vent..."
+      });
+      loading.present();
+
+      // Saving the users allergies
+      this.apiProvider.post('/user/setallergies', {
+        allergies : this.selectedAllergies,
+        serviceuserid : this.user['serviceuserid'],
+      }).subscribe((data) => {
+        loading.dismiss();
+
+        // Checking the status
+        if(data.status == true){
+          
+          this.navCtrl.pop().then(() => {
+            this.events.publish('filters-set');
+          });
+
+        } else {
+          // Showing the alert
+          let alert = this.alertController.create({
+            title: 'Oops!',
+            message: 'Det oppstod en feil ved lagring. Vennligst kontakt betjeningen om det vedtar',
+            buttons: [
+              {
+                text: 'Avbryt',
+                role: 'cancel'
+              },
+              {
+                text: 'OK',
+                handler: () => {
+                  this.navCtrl.pop().then(() => {
+                    this.events.publish('filters-set');
+                  });
+                }
+              }
+            ]
+          });
+          alert.present();
+        }
+      });
+
+    } else {
+
+      this.navCtrl.pop().then(() => {
+        this.events.publish('filters-set');
+      });
+      
+    }
+
   }
 }

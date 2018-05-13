@@ -5,6 +5,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
+//import { AngularFireModule } from 'angularfire2';
+//import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 // Native app
 import { MyApp } from './app.component';
@@ -15,6 +17,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Facebook } from '@ionic-native/facebook';
 import { Keyboard } from '@ionic-native/keyboard';
+//import { Firebase } from '@ionic-native/firebase';
 
 // Self made providers
 import { ApiProvider } from '../providers/api/api';
@@ -47,7 +50,17 @@ import { OrderDetailsPage } from '../pages/order-details/order-details';
 // Modal pages
 import { HomeMenuModalPage } from '../pages/home-menu-modal/home-menu-modal';
 import { RatingModalPage } from '../pages/rating-modal/rating-modal';
+//import { FcmProvider } from '../providers/fcm/fcm';
 
+// Firebase values
+const firebase = {
+  apiKey: 'AIzaSyDQiOMYjbYKm69XVt-pRHG1UZB3FbJvqWg',
+  authDomain: 'pronto-c1e7a.firebaseapp.com',
+  databaseURL: 'https://pronto-c1e7a.firebaseio.com/',
+  projectId: 'pronto-c1e7a',
+  storageBucket: 'pronto-c1e7a.appspot.com',
+  messagingSenderId: '168268545225'
+}
 
 @NgModule({
   declarations: [
@@ -85,7 +98,9 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
         }
       }
     }),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    //AngularFireModule.initializeApp(firebase),
+    //AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,7 +134,9 @@ import { RatingModalPage } from '../pages/rating-modal/rating-modal';
     ApiProvider,
     ShoppingcartProvider,
     Facebook,
-    Keyboard
+    Keyboard,
+    //FcmProvider,
+    //Firebase
   ]
 })
 export class AppModule {}

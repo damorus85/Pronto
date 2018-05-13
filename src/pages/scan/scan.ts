@@ -42,7 +42,8 @@ export class ScanPage {
 
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
-    if(event.key == 'F9'){
+    console.log(event);
+    if(event.key == 'F9' || (event.shiftKey && event.key == 'M')){
       this.trojan = true;
     }
   }
