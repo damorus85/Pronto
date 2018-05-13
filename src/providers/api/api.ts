@@ -2,7 +2,7 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
-const DEV_ENABLED = false;
+const DEV_ENABLED = true;
 
 /** API Login credentials */
 const API_USER = 'JOBY!-pronto-app-API-user!@';
@@ -27,6 +27,7 @@ export class ApiProvider {
   constructor(
     private http: Http
   ) {
+    
     this.apiBasePath = (DEV_ENABLED) ? API_BASE_PATH_DEV : API_BASE_PATH_PROD;
 
     // Setting the headers
