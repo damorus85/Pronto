@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+import { FCM } from '@ionic-native/fcm';
 
 // Self made pages
 import { SplashPage } from '../pages/splash/splash';
@@ -21,6 +22,8 @@ export class MyApp {
 
   // Contructor
   constructor(
+    public fcm: FCM,
+    private toastController: ToastController,
     private storage: Storage,
     platform: Platform, 
     statusBar: StatusBar, 
@@ -31,6 +34,41 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      
+      // Checking android and ios
+      if(platform.is('cordova')){
+        // Fetching the device token
+        this.fcm.getToken().then(token => {
+          this.storage.set("pronto-d-t", token);
+        });
+
+        // Token update
+        this.fcm.onTokenRefresh().subscribe(token => {
+          this.storage.remove("pronto-d-t").then(() => {
+            this.storage.set("pronto-d-t", token);
+          });
+        });
+
+        // Notification handling
+        this.fcm.onNotification().subscribe(data => {
+          if (!data.wasTapped && data.heading != undefined) {
+
+            // Checking if heading is not empty
+            if(data.heading != ""){
+
+              // Showing toast
+              let toast = this.toastController.create({
+                message: data.heading,
+                duration: 2000,
+                position: 'top'
+              });
+              toast.present();
+            }
+          }
+        });
+      } else {
+        this.storage.set("pronto-d-t", null);
+      }
       
       // Checking if logged in
       this.storage.get('pronto-user').then((user) => {

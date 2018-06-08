@@ -33,10 +33,7 @@ export class ApiProvider {
     // Setting the headers
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
-    if(!DEV_ENABLED){
-      this.headers.append('Origin', 'no.prontoapp.pronto');
-      this.headers.append('Authorization', 'Basic ' + btoa(API_USER + ':' + API_PASS));
-    }
+    this.headers.append('Authorization', 'Basic ' + btoa(API_USER + ':' + API_PASS));
   }
 
   // GET request

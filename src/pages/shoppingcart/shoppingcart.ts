@@ -9,6 +9,7 @@ import { ShoppingcartProvider } from '../../providers/shoppingcart/shoppingcart'
 
 // Self made pages
 import { HomePage } from '../../pages/home/home';
+import { MenuItemCommentPage } from '../../pages/menu-item-comment/menu-item-comment';
 
 /**
  * Generated class for the ShoppingcartPage page.
@@ -28,10 +29,12 @@ export class ShoppingcartPage {
   public cartTotal;
   public comment;
   public activeSubmit = true;
+  public deviceToken = "";
 
   // User and customer
   public customer = {};
   public user = {};
+  public allergies = [];
   public tablenumber;
 
   // Soft payments
@@ -50,9 +53,13 @@ export class ShoppingcartPage {
     public navCtrl: NavController, 
     public navParams: NavParams) {
 
+      // Fetching the device token
+      this.storage.get('pronto-d-t').then((token) => this.deviceToken = token);
+
       // Getting the selected customer and table number
       this.storage.get('pronto-tid').then((tid) => this.tablenumber = tid);
       this.storage.get('pronto-user').then((user) => this.user = user);
+      this.storage.get('pronto-filters-allergies').then((allergies) => this.allergies = allergies);
       this.storage.get('pronto-sc').then((sc) => {
         this.customer = sc;
 
@@ -83,12 +90,12 @@ export class ShoppingcartPage {
     // Fetching the cart
     return this.shoppingcart.get().then((cart) => {
       this.cart = cart;
-      loading.dismiss();
+      loading.dismiss(); 
     });
   }
 
   // Page load
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     
     // Loading the cart
     this.loadCart();
@@ -102,6 +109,13 @@ export class ShoppingcartPage {
 
     // Saving the comment
     this.storage.set('pronto-cart-comment', this.comment);
+  }
+
+  // Goto menu item comment
+  changeComment(key){
+    this.navCtrl.push(MenuItemCommentPage, {
+      key : key 
+    });
   }
 
   // Saving the comment to local var
@@ -244,7 +258,8 @@ export class ShoppingcartPage {
                 doneness : this.cart[key].doneness,
                 amount : this.cart[key].amount,
                 price : this.cart[key].price,
-                total : this.cart[key].total
+                total : this.cart[key].total,
+                comment : this.cart[key].comment
               });
             }
 
@@ -257,6 +272,8 @@ export class ShoppingcartPage {
               status : 0, // Default to placed order
               comment : this.comment,
               softpayment: this.selectedSoftPayment,
+              token: this.deviceToken,
+              allergies : this.allergies,
               lines : lines
             }).subscribe((data) => {
               loading.dismiss();

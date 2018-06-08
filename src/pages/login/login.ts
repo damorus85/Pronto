@@ -24,9 +24,11 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  // Setting form valid to false
+
+  // Public values
   public formValid = false;
   public facebookLoading;
+  public deviceToken = "";
 
   // Constructor
   constructor(
@@ -37,6 +39,9 @@ export class LoginPage {
     private loadingController: LoadingController,
     public navCtrl: NavController, 
     public navParams: NavParams) {
+
+      // Fetching the device token
+      this.storage.get('pronto-d-t').then((token) => this.deviceToken = token);
   }
 
   // Goto register page
@@ -70,12 +75,13 @@ export class LoginPage {
     // Fetching login from API
     this.apiProvider.get('/user/login', {
       email : values.email,
-      password : (values.password)
+      password : (values.password),
+      token: this.deviceToken
     }).subscribe((data) => {
 
       // Closing the loading
       loading.dismiss();
-      
+
       // Checking response status
       if(data.status !== true){
 
@@ -86,6 +92,7 @@ export class LoginPage {
           buttons: ['OK']
         });
         alertController.present();
+
       } else {
 
         // Saving the user
@@ -152,7 +159,10 @@ export class LoginPage {
   // Fetching facebook user defails
   public getFacebookUserDetail() {
     this.facebook.api('me?fields=id,name,email',[]).then(res => {
-        
+      
+      // Adding the token to the result
+      res.token = this.deviceToken;
+
       // Sending the post data to the API
       this.apiProvider.post('/user/facebooklogin', res).subscribe((data) => {
 

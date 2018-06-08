@@ -25,8 +25,8 @@
       <ion-list>
 
         <!-- Shopping cart items -->
-        <ion-item-sliding *ngFor="let item of cart">
-          <ion-item>
+        <ion-item-sliding *ngFor="let item of cart; let i = index">
+          <ion-item (click)="changeComment(i)">
             <ion-grid no-padding>
               <ion-row>
                 <ion-col col-8 text-left>
@@ -40,6 +40,9 @@
                 <ion-col col-4 text-right>
                   {{item.total | priceFormat}}
                   <p class="sub-text">{{item.amount}} x {{item.price | priceFormat}}</p>
+                </ion-col>
+                <ion-col col-12 *ngIf="item.comment != null">
+                  <p class="sub-text">{{item.comment}}</p>
                 </ion-col>
               </ion-row>
             </ion-grid>

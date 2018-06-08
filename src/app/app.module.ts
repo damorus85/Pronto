@@ -5,8 +5,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
-//import { AngularFireModule } from 'angularfire2';
-//import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 // Native app
 import { MyApp } from './app.component';
@@ -17,14 +15,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Facebook } from '@ionic-native/facebook';
 import { Keyboard } from '@ionic-native/keyboard';
-//import { Firebase } from '@ionic-native/firebase';
+import { FCM } from '@ionic-native/fcm';
 
 // Self made providers
 import { ApiProvider } from '../providers/api/api';
 import { ShoppingcartProvider } from '../providers/shoppingcart/shoppingcart';
 
 // Self made pipes
-//import { PriceFormatPipe } from '../pipes/price-format/price-format';
 import { PipesModule } from '../pipes/pipes.module';
 
 // Pages
@@ -37,9 +34,13 @@ import { ScanPage } from '../pages/scan/scan';
 import { TableNumberPage } from '../pages/table-number/table-number';
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from '../pages/menu/menu';
+import { NotificationsPage } from '../pages/notifications/notifications'; 
+import { NotificationsCityPage } from '../pages/notifications-city/notifications-city';
+import { NotificationsCustomersPage } from '../pages/notifications-customers/notifications-customers';
 import { MenuListPage } from '../pages/menu-list/menu-list';
 import { MenuFilterPage } from '../pages/menu-filter/menu-filter';
 import { MenuItemPage } from '../pages/menu-item/menu-item';
+import { MenuItemCommentPage } from '../pages/menu-item-comment/menu-item-comment';
 import { ProfilePage } from '../pages/profile/profile';
 import { ShoppingcartPage } from '../pages/shoppingcart/shoppingcart';
 import { OrdersPage } from '../pages/orders/orders';
@@ -50,17 +51,6 @@ import { OrderDetailsPage } from '../pages/order-details/order-details';
 // Modal pages
 import { HomeMenuModalPage } from '../pages/home-menu-modal/home-menu-modal';
 import { RatingModalPage } from '../pages/rating-modal/rating-modal';
-//import { FcmProvider } from '../providers/fcm/fcm';
-
-// Firebase values
-const firebase = {
-  apiKey: 'AIzaSyDQiOMYjbYKm69XVt-pRHG1UZB3FbJvqWg',
-  authDomain: 'pronto-c1e7a.firebaseapp.com',
-  databaseURL: 'https://pronto-c1e7a.firebaseio.com/',
-  projectId: 'pronto-c1e7a',
-  storageBucket: 'pronto-c1e7a.appspot.com',
-  messagingSenderId: '168268545225'
-}
 
 @NgModule({
   declarations: [
@@ -78,6 +68,7 @@ const firebase = {
     MenuPage,
     MenuListPage,
     MenuItemPage,
+    MenuItemCommentPage,
     MenuFilterPage,
     ProfilePage,
     ShoppingcartPage,
@@ -85,6 +76,9 @@ const firebase = {
     OrderDetailsPage,
     OrderHistoryPage,
     OrderHistoryListPage,
+    NotificationsPage,
+    NotificationsCityPage,
+    NotificationsCustomersPage
   ],
   imports: [
     FormsModule,
@@ -98,9 +92,7 @@ const firebase = {
         }
       }
     }),
-    IonicStorageModule.forRoot(),
-    //AngularFireModule.initializeApp(firebase),
-    //AngularFirestoreModule
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,12 +111,16 @@ const firebase = {
     MenuFilterPage,
     MenuListPage,
     MenuItemPage,
+    MenuItemCommentPage, 
     ProfilePage,
     ShoppingcartPage,
     OrdersPage,
     OrderHistoryPage,
     OrderHistoryListPage,
-    OrderDetailsPage
+    OrderDetailsPage,
+    NotificationsPage,
+    NotificationsCityPage,
+    NotificationsCustomersPage
   ],
   providers: [
     StatusBar,
@@ -135,8 +131,7 @@ const firebase = {
     ShoppingcartProvider,
     Facebook,
     Keyboard,
-    //FcmProvider,
-    //Firebase
+    FCM
   ]
 })
 export class AppModule {}

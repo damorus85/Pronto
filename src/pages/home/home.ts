@@ -32,6 +32,7 @@ export class HomePage {
   public cartAmount;
   public haveOrders = false;
   public haveUnfinishedOrders = false;
+  public wholeTable = false;
 
   // Toasts
   public showToastTruncated = false;
@@ -58,6 +59,7 @@ export class HomePage {
       }
   }
 
+  // Loading the home page
   public loadHomePage(){
     // Default values
     this.haveOrders = false;
@@ -327,51 +329,112 @@ export class HomePage {
           text: 'Be om regningen',
           handler: () => {
             
-            // Starting the loading
-            let loading = this.loadingController.create({
-              content : "Laster vennligst vent..."
+            // Just you or the whole table?
+            let confirm2 = this.alertController.create({
+              title: 'Din eller hele bordet?',
+              message: 'Vil du har regningen for bare dine ordre eller for hele bordet?',
+              buttons: [
+                {
+                  text: 'Bare mine ordre',
+                  handler: () => {
+                    this.wholeTable = false;
+                    this.splitOrNot();
+                  }
+                },
+                {
+                  text: 'Hele bordet',
+                  handler: () => {
+                    this.wholeTable = true;
+                    this.splitOrNot();
+                  }
+                },
+                {
+                  text: 'Avbryt',
+                  role: 'cancel'
+                }
+              ]
             });
-            loading.present();
-
-            // Inserting the callout for waiter
-            this.apiProvider.post('/customer/callout', {
-              customerid : this.customer['customerid'],
-              serviceuserid : this.user['serviceuserid'],
-              tablenumber : this.tablenumber,
-              type : 'getthecheck',
-              status : 0
-            }).subscribe((data) => {
-              loading.dismiss();
-
-              if(data.status == true){
-                
-                // Success message
-                let toast = this.toastController.create({
-                  message: 'Betjeningen er tilkallt om regningen',
-                  duration: 2000,
-                  position: 'bottom'
-                });
-                toast.present();
-                
-                // Opening the modal page
-                let modal = this.modalController.create(RatingModalPage);
-                modal.present();
-
-              } else {
-
-                // Error message
-                let alert = this.alertController.create({
-                  title: 'Noe skjedde!',
-                  message: 'Det oppstod noen problemer med tilkallingen av regningen, vennligst prøv igjen',
-                  buttons: ['OK']
-                });
-                alert.present();
-              }
-            });
+            confirm2.present();
           }
         }
       ]
     });
     confirm.present();
+  }
+
+  // Split the bill or not
+  public splitOrNot(){
+    // Just you or the whole table?
+    let confirm = this.alertController.create({
+      title: 'Splitte regningen?',
+      message: 'Vil du har regningen skal splittes mellom fler?',
+      buttons: [
+        {
+          text: 'Ikke splittes',
+          handler: () => {
+            this.callBill(false);
+          }
+        },
+        {
+          text: 'Skal splittes',
+          handler: () => {
+            this.callBill(true);
+          }
+        },
+        {
+          text: 'Avbryt',
+          role: 'cancel'
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  // Calling for the bill
+  public callBill(split){
+
+    // Starting the loading
+    let loading = this.loadingController.create({
+      content : "Laster vennligst vent..."
+    });
+    loading.present();
+
+    // Inserting the callout for waiter
+    this.apiProvider.post('/customer/callout', {
+      customerid : this.customer['customerid'],
+      serviceuserid : this.user['serviceuserid'],
+      tablenumber : this.tablenumber,
+      type : 'getthecheck',
+      whole_table : (this.wholeTable) ? 1 : 0,
+      split_bill : (split) ? 1 : 0,
+      status : 0
+    }).subscribe((data) => {
+      loading.dismiss();
+
+      if(data.status == true){
+        
+        // Success message
+        let toast = this.toastController.create({
+          message: 'Betjeningen er tilkallt om regningen',
+          duration: 2000,
+          position: 'bottom'
+        });
+        toast.present();
+        
+        // Opening the modal page
+        let modal = this.modalController.create(RatingModalPage);
+        modal.present();
+
+      } else {
+
+        // Error message
+        let alert = this.alertController.create({
+          title: 'Noe skjedde!',
+          message: 'Det oppstod noen problemer med tilkallingen av regningen, vennligst prøv igjen',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+    });
   }
 }

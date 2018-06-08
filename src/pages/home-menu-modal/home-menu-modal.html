@@ -20,6 +20,7 @@
 
 <ion-content> 
   <ion-card>
+
     <ion-list>
       <button ion-item (click)="gotoPage('profile')">
         <ion-icon name="person" item-start></ion-icon>
@@ -33,5 +34,13 @@
         Din ordrehistorikk
       </button>
     </ion-list>
+
+    <ion-list>
+      <button ion-item (click)="gotoPage('notifications')">
+        <ion-icon name="notifications" item-start></ion-icon>
+        Notifikasjoner
+      </button>
+    </ion-list>
+
   </ion-card>
 </ion-content>

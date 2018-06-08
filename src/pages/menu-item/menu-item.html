@@ -108,6 +108,13 @@
           </ng-template>
         </ion-list>
 
+        <!-- Item comment -->
+        <form #commentForm="ngForm" no-padding>
+          <ion-item no-padding>
+            <ion-textarea rows="3" name="comment" placeholder="Kommentar" (keyup)="saveComment(commentForm.value.comment)" value="{{comment}}" ngModel></ion-textarea>
+          </ion-item>
+        </form>
+
         <!-- Add to cart -->
         <button ion-button block (click)="addTOCart()" *ngIf="!isClosed">Legg til bestillingen</button>
         

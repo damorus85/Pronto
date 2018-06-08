@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 // Self made pages
 import { ProfilePage } from '../profile/profile';
 import { OrderHistoryPage } from '../../pages/order-history/order-history';
+import { NotificationsPage } from '../../pages/notifications/notifications';
 /**
  * Generated class for the HomeMenuModalPage page.
  *
@@ -26,7 +27,7 @@ export class HomeMenuModalPage {
   closeSettings(){
     this.navCtrl.pop();
   }
-
+ 
   // Goto
   gotoPage(page){
     switch (page) {
@@ -35,6 +36,9 @@ export class HomeMenuModalPage {
         break;
       case 'order-history':
         this.navCtrl.push(OrderHistoryPage);
+        break;
+      case 'notifications':
+        this.navCtrl.push(NotificationsPage);
         break;
     }
   }

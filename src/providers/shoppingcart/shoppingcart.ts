@@ -25,7 +25,7 @@ export class ShoppingcartProvider {
    * @param float total 
    * @return void
    */
-  public add(itemid, label, variantLabel, doneness, price, amount, total){
+  public add(itemid, label, variantLabel, doneness, price, amount, total, comment){
     return this.storage.get(CART_TAG).then((shoppingcart) => {
       // Checking empty cart
       if(shoppingcart == null){
@@ -59,7 +59,8 @@ export class ShoppingcartProvider {
           doneness : doneness,
           price : price,
           amount : amount,
-          total : total
+          total : total,
+          comment : comment
         });
       }
       
@@ -135,6 +136,22 @@ export class ShoppingcartProvider {
     });
   }
   /**
+   * Changing the comment of a menuitem
+   * 
+   * @param key 
+   * @param comment 
+   */
+  public changeComment(key, comment){
+    return this.storage.get(CART_TAG).then((shoppingcart) => {
+      if(shoppingcart != null){
+        if(shoppingcart[key] != undefined){
+          shoppingcart[key]['comment'] = comment;
+          return this.storage.set(CART_TAG, shoppingcart);
+        }
+      }
+    });
+  }
+  /**
    * Truncating the cart
    * 
    * @returns void
@@ -150,6 +167,16 @@ export class ShoppingcartProvider {
   public get(){
     return this.storage.get(CART_TAG).then((shoppingcart) => {
       return shoppingcart;
+    });
+  }
+  /**
+   * Fetching a single item
+   * 
+   * @param key
+   */
+  public getItem(key){
+    return this.storage.get(CART_TAG).then((shoppingcart) => {
+      return shoppingcart[key] != undefined ? shoppingcart[key] : false; 
     });
   }
   /**

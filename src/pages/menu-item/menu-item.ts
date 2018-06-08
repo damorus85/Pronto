@@ -39,6 +39,7 @@ export class MenuItemPage {
   public allergies = [];
   public cartTotal;
   public cartAmount;
+  public comment = null;
   public selectedDoneness;
   public isClosed = false;
   
@@ -164,6 +165,11 @@ export class MenuItemPage {
     this.calculatePrice();
   }
 
+  // Saving the comment to local var
+  saveComment(value){
+    this.comment = value;
+  }
+
   // Adding the the cart
   addTOCart(){
     
@@ -183,7 +189,7 @@ export class MenuItemPage {
       loading.present();
 
       // Adding the item to the cart
-      this.shoppingcart.add(this.customermenuitemid, this.menuItem['label'], this.selectedVariantLabel, this.selectedDoneness, this.selectedVariantPrice, this.amount, this.currentPrice).then(() => {
+      this.shoppingcart.add(this.customermenuitemid, this.menuItem['label'], this.selectedVariantLabel, this.selectedDoneness, this.selectedVariantPrice, this.amount, this.currentPrice, this.comment).then(() => {
         
         // Fetching the new cart total
         this.shoppingcart.getTotalPrice().then((total) => {
