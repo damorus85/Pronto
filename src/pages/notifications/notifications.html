@@ -1,0 +1,69 @@
+<!--
+  Generated template for the NotificationsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar transparent>
+    <ion-title>Notifikasjoner</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <!-- Main notifications switch -->
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item no-padding>
+        <ion-label>Motta notifikasjoner</ion-label>
+        <ion-toggle [(ngModel)]="notifications" (ngModelChange)="toggleNotifications($event)"></ion-toggle>
+      </ion-item>
+
+      <p>
+        Notifikasjoner er gode tilbud og varsler fra serveringssteder du har besøkt og byer du befinner deg i.
+        Du kommer ikke til å bli spammet! Vi lover deg!
+      </p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- City notifications switch -->
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item no-padding>
+        <ion-label>Byer du besøker</ion-label>
+        <ion-toggle [disabled]="!notifications" [(ngModel)]="notifications_city" (ngModelChange)="toggleNotificationsCity($event)"></ion-toggle>
+      </ion-item>
+
+      <button ion-button block icon-left (click)="gotoNotificationsCity()" [disabled]="!notifications_city || !notifications">
+        <ion-icon name="home"></ion-icon>
+        Velg dine byer
+      </button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Customer notifications switch -->
+  <ion-card>
+    <ion-card-content>
+
+      <ion-item no-padding>
+        <ion-label>Steder du har besøkt</ion-label>
+        <ion-toggle [disabled]="!notifications" [(ngModel)]="notifications_customers" (ngModelChange)="toggleNotificationsCustomers($event)"></ion-toggle>
+      </ion-item>
+
+      <button ion-button block icon-left (click)="gotoNotificationsCustomers()" [disabled]="!notifications_customers || !notifications">
+        <ion-icon name="restaurant"></ion-icon>
+        Velg dine steder
+      </button>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

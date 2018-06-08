@@ -1,0 +1,46 @@
+<!--
+  Generated template for the NotificationsCityPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar transparent>
+    <ion-title>Velg dine byer</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>Valgte byer</ion-card-header>
+    <ion-card-content>
+
+      <ion-item no-padding *ngFor="let city of selected_cities">
+        <ion-label>{{city.city}}</ion-label>
+        <ion-toggle checked="true" (ionChange)="updateCityNotification($event, city.cityid)"></ion-toggle>
+      </ion-item>
+
+      <p *ngIf="selected_cities.length == 0">Du har ikke valgt noen byer å få tilbud fra</p>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>Tilgjengelige byer</ion-card-header>
+    <ion-card-content>
+
+      <ion-item no-padding *ngFor="let city of cities">
+        <ion-label>{{city.city}}</ion-label>
+        <ion-toggle checked="false" (ionChange)="updateCityNotification($event, city.cityid)"></ion-toggle>
+      </ion-item>
+
+      <p *ngIf="cities.length == 0">Det er ingen tilgjengelige byer å velge mellom</p>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
