@@ -2,7 +2,7 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
-const DEV_ENABLED = false;
+const DEV_ENABLED = true;
 
 /** API Login credentials */
 const API_USER = 'JOBY!-pronto-app-API-user!@';

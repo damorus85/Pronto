@@ -169,11 +169,17 @@ export class HomePage {
 
   // Calling the waiter
   callWaiter(){
-
     // Presenting the confirm
     let confirm = this.alertController.create({
       title: 'Tilkalle betjeningen?',
       message: 'Vil du tilkalle betjeningen?',
+      inputs : [
+        {
+          name: 'comment',
+          placeholder: 'Kommentar',
+          type : 'textarea'
+        }
+      ],
       buttons: [
         {
           text: 'Avbryt',
@@ -181,7 +187,7 @@ export class HomePage {
         },
         {
           text: 'Tilkall betjeningen',
-          handler: () => {
+          handler: (data) => {
             
             // Starting the loading
             let loading = this.loadingController.create({
@@ -195,6 +201,7 @@ export class HomePage {
               serviceuserid : this.user['serviceuserid'],
               tablenumber : this.tablenumber,
               type : 'waiter',
+              comment : data.comment,
               status : 0
             }).subscribe((data) => {
               loading.dismiss();
