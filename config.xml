@@ -36,6 +36,7 @@
         <string>Camera is used for scanning QR codes only</string>
     </edit-config>
     <platform name="android">
+        <framework src="com.facebook.android:facebook-android-sdk:4.25.0" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
