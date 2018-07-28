@@ -26,7 +26,7 @@ temp/
 platforms/*
 !platforms/android
 platforms/android/*
-!platforms/android/build-extras.gradle
+!platforms/android/build.gradle
 plugins/
 plugins/android.json
 plugins/ios.json
