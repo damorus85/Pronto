@@ -22,11 +22,8 @@ dist/
 node_modules/
 tmp/
 temp/
-# hooks/
-platforms/*
-!platforms/android
-platforms/android/*
-!platforms/android/build.gradle
+hooks/
+platforms/
 plugins/
 plugins/android.json
 plugins/ios.json
