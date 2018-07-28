@@ -104,4 +104,5 @@
         <variable name="APP_NAME" value="Pronto" />
     </plugin>
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
+    <engine name="android" spec="~6.3.0" />
 </widget>
