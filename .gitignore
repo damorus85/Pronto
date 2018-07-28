@@ -23,7 +23,9 @@ node_modules/
 tmp/
 temp/
 # hooks/
-platforms/
+platforms/*
+!platforms/android
+platforms/android/*
 !platforms/android/build-extras.gradle
 plugins/
 plugins/android.json
