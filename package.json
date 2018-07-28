@@ -36,6 +36,7 @@
     "angularfire2": "^5.0.0-rc.6",
     "cordova-android": "6.3.0",
     "cordova-ios": "4.5.4",
+    "cordova-multidex": "git+https://github.com/jwall149/cordova-multidex.git",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.4",
@@ -76,7 +77,8 @@
         "APP_ID": "2085452008349352",
         "APP_NAME": "Pronto"
       },
-      "cordova-plugin-fcm": {}
+      "cordova-plugin-fcm": {},
+      "me.tonny.cordova.plugins.multidex": {}
     },
     "platforms": [
       "ios",

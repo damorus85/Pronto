@@ -106,4 +106,5 @@
         <variable name="APP_NAME" value="Pronto" />
     </plugin>
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
+    <plugin name="me.tonny.cordova.plugins.multidex" spec="https://github.com/jwall149/cordova-multidex" />
 </widget>
