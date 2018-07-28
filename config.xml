@@ -100,7 +100,7 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
+    <plugin name="cordova-plugin-facebook4" spec="1.7.4">
         <variable name="APP_ID" value="2085452008349352" />
         <variable name="APP_NAME" value="Pronto" />
     </plugin>
