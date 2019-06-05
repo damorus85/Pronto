@@ -72,10 +72,8 @@ export class MenuPage {
     this.shoppingcart.getTotalAmount().then((amount) => this.cartAmount = amount);
 
     // Fetching the menu
-    this.apiProvider.get("/customer/menu", {
-      id : this.customermenuid
-    }).subscribe((data) => {
-      this.menu = data.data;
+    this.apiProvider.get("/customer/menu/" + this.customermenuid).subscribe((data) => {
+      this.menu = data;
     });
 
     // Fetching the menu items
@@ -97,8 +95,7 @@ export class MenuPage {
       this.allergies = (allergies != null) ? allergies : [];
       
       // Fetching the menu items
-      return this.apiProvider.get("/customer/menuitemsgrouped", {
-        id : this.customermenuid,
+      return this.apiProvider.get("/customer/menuitemsgrouped/" + this.customermenuid, {
         'allergies[]' : this.allergies
       }).subscribe((data) => {
         this.menuItems = data.data;

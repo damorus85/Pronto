@@ -57,8 +57,7 @@ export class NotificationsCustomersPage {
     }
 
     // Updating the users settings
-    this.apiProvider.post('/user/setnotificationscustomers', {
-      serviceuserid : this.user['serviceuserid'],
+    this.apiProvider.put('/user/setnotificationscustomers/' + this.user['serviceuserid'], {
       customerid : customerid,
       operation : (event.value) ? 'add' : 'remove'
     }).subscribe((data) => {
@@ -67,7 +66,7 @@ export class NotificationsCustomersPage {
       loading.dismiss();
 
       // Checking the response status
-      if(data.status !== true){
+      if(data.errorMessage != undefined){
 
         // Email exists, please provide with another
         let alertController = this.alertController.create({
@@ -80,8 +79,8 @@ export class NotificationsCustomersPage {
       } else {
 
         // Saving the user id and returning
-        this.storage.set('pronto-user', data.data);
-        this.user = data.data;
+        this.storage.set('pronto-user', data);
+        this.user = data;
       }
 
     });

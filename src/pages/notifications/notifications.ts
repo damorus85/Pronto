@@ -95,17 +95,16 @@ export class NotificationsPage {
     // Creating the values
     let values = {};
     values['email'] = this.user['email']; 
-    values['serviceuserid'] = this.user['serviceuserid'];
     values[field] = (value) ? 1 : 0;
 
     // Updating the user
-    this.apiProvider.post('/user', values).subscribe((data) => {
+    this.apiProvider.put('/user/' + this.user['serviceuserid'], values).subscribe((data) => {
 
       // Closing the loading
       loading.dismiss();
 
       // Checking the response status
-      if(data.status !== true){
+      if(data.errorMessage != undefined){
 
         // Email exists, please provide with another
         let alertController = this.alertController.create({
@@ -118,8 +117,8 @@ export class NotificationsPage {
       } else {
 
         // Saving the user id and returning
-        this.storage.set('pronto-user', data.data);
-        this.user = data.data;
+        this.storage.set('pronto-user', data);
+        this.user = data;
       }
 
     }, error => {

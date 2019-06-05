@@ -66,12 +66,8 @@ export class OrderHistoryListPage {
     return this.storage.get('pronto-user').then((user) => {
 
       // Fetching the order history
-      return this.apiProvider.get("/orderhistory/getcustomerdayorders", {
-        serviceuserid : user.serviceuserid,
-        customerid : this.customerid,
-        date : this.date
-      }).subscribe((data) => {
-        this.orders = data.data;
+      return this.apiProvider.get("/orderhistory/getcustomerdayorders/" + this.customerid + "/" + user.serviceuserid + "/" + this.date).subscribe((data) => {
+        this.orders = data;
         loading.dismiss();
       });
     });

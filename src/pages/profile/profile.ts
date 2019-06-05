@@ -79,16 +79,15 @@ export class ProfilePage {
         content : "Uppdaterer deg..."
       });
       loading.present();
-
+      
       // Sending the post data to the API
-      values.serviceuserid = this.user['serviceuserid'];
-      this.apiProvider.post('/user', values).subscribe((data) => {
+      this.apiProvider.put('/user/' + this.user['serviceuserid'], values).subscribe((data) => {
 
         // Closing the loading
         loading.dismiss();
         
         // Checking the response status
-        if(data.status !== true){
+        if(data.errorMessage != undefined){
 
           // Email exists, please provide with another
           let alertController = this.alertController.create({
@@ -101,8 +100,8 @@ export class ProfilePage {
         } else {
 
           // Saving the user id and returning
-          this.storage.set('pronto-user', data.data);
-          this.user = data.data;
+          this.storage.set('pronto-user', data);
+          this.user = data;
           this.toggleEdit();
         }
       }, error => {

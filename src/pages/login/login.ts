@@ -78,12 +78,12 @@ export class LoginPage {
       password : (values.password),
       token: this.deviceToken
     }).subscribe((data) => {
-
+      
       // Closing the loading
       loading.dismiss();
 
       // Checking response status
-      if(data.status !== true){
+      if(data.errorMessage !== undefined || data.message !== undefined){
 
         // Invalid login
         let alertController = this.alertController.create({
@@ -96,10 +96,10 @@ export class LoginPage {
       } else {
 
         // Saving the user
-        this.storage.set('pronto-user', data.data);
+        this.storage.set('pronto-user', data);
 
         // Saving the allergies
-        this.storage.set('pronto-filters-allergies', data.data['allergies']);
+        this.storage.set('pronto-filters-allergies', data['allergies']);
 
         // Redirecting
         this.navCtrl.setRoot(ScanPage);
@@ -170,7 +170,7 @@ export class LoginPage {
         this.facebookLoading.dismiss();
 
         // Checking response status
-        if(data.status !== true){
+        if(data.errorMessage !== undefined || data.message !== undefined){
 
           // Invalid login
           let alertController = this.alertController.create({
@@ -182,10 +182,10 @@ export class LoginPage {
         } else {
 
           // Saving the user
-          this.storage.set('pronto-user', data.data);
+          this.storage.set('pronto-user', data);
 
           // Saving the allergies
-          this.storage.set('pronto-filters-allergies', data.data['allergies']);
+          this.storage.set('pronto-filters-allergies', data['allergies']);
 
           // Redirecting
           this.navCtrl.setRoot(ScanPage);

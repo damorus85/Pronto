@@ -48,12 +48,10 @@ export class OrderDetailsPage {
     loading.present();
 
     // Fetching the order
-    return this.apiProvider.get('/order/get', {
-      id : this.orderid
-    }).subscribe((data) => {
+    return this.apiProvider.get('/order/' + this.orderid).subscribe((data) => {
       loading.dismiss();
       
-      this.order = data.data;
+      this.order = data;
       if(refresher != null){
         if(typeof refresher.complete == 'function'){
           refresher.complete();

@@ -70,10 +70,8 @@ export class MenuListPage {
     return this.storage.get('pronto-sc').then((customer) => {
       this.customer = customer;
 
-      return this.apiProvider.get("/customer/menus", {
-        id : this.customer['customerid']
-      }).subscribe((data) => {
-        this.menuList = this.removeExpiredMenus(data.data);
+      return this.apiProvider.get("/customer/menus/" + this.customer['customerid']).subscribe((data) => {
+        this.menuList = this.removeExpiredMenus(data);
         loading.dismiss();
       });
     });

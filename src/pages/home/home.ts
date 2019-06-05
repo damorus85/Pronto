@@ -71,10 +71,7 @@ export class HomePage {
 
     // Have orders
     return this.storage.get('pronto-user').then((user) => {
-      this.apiProvider.get('/order/getuserdayorders', {
-        id : user['serviceuserid'],
-        customerid : this.customer['customerid']
-      }).subscribe((data) => {
+      this.apiProvider.get('/order/getuserdayorders/' + this.customer['customerid'] + '/' + user['serviceuserid']).subscribe((data) => {
         if(data.status == true){
           if(data.data.length > 0){
             this.haveOrders = true;
@@ -206,7 +203,7 @@ export class HomePage {
             }).subscribe((data) => {
               loading.dismiss();
 
-              if(data.status == true){
+              if(data.errorMessage == undefined){
                 
                 // Success message
                 let toast = this.toastController.create({
@@ -266,7 +263,7 @@ export class HomePage {
             }).subscribe((data) => {
               loading.dismiss();
 
-              if(data.status == true){
+              if(data.errorMessage == undefined){
                 
                 // Success message
                 let toast = this.toastController.create({
@@ -418,7 +415,7 @@ export class HomePage {
     }).subscribe((data) => {
       loading.dismiss();
 
-      if(data.status == true){
+      if(data.errorMessage == undefined){
         
         // Success message
         let toast = this.toastController.create({

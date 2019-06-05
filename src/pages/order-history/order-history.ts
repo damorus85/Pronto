@@ -51,10 +51,8 @@ export class OrderHistoryPage {
     return this.storage.get('pronto-user').then((user) => {
       
       // Fetching the order history
-      return this.apiProvider.get("/orderhistory/getcustomerlist", {
-        serviceuserid : user.serviceuserid
-      }).subscribe((data) => {
-        this.orderhistory = data.data;
+      return this.apiProvider.get("/orderhistory/getcustomerlist/" + user.serviceuserid).subscribe((data) => {
+        this.orderhistory = data;
         loading.dismiss();
       });
     });

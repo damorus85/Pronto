@@ -50,21 +50,17 @@ export class NotificationsCityPage {
 
     // Fetching all the allergies
     this.apiProvider.get('/static/values').subscribe((data) => {
-      if(data.status == true){
+      if(data.errorMessage == undefined){
         
-        for(let i in data.data['notification_cities']){
-          this.all_cities[data.data['notification_cities'][i]['cityid']] = data.data['notification_cities'][i];
+        for(let i in data['notification_cities']){
+          this.all_cities[data['notification_cities'][i]['cityid']] = data['notification_cities'][i];
 
-          if(this.user['notificationcities'].indexOf('' + data.data['notification_cities'][i]['cityid'] + '') > -1){
-            this.selected_cities.push(data.data['notification_cities'][i]);
+          if(this.user['notificationcities'].indexOf('' + data['notification_cities'][i]['cityid'] + '') > -1){
+            this.selected_cities.push(data['notification_cities'][i]);
           } else {
-            this.cities.push(data.data['notification_cities'][i]);
+            this.cities.push(data['notification_cities'][i]);
           }
         }
-        
-        // Dismissing the loading
-        loading.dismiss();
-
       } else {
 
         // Presenting the error message
@@ -75,6 +71,9 @@ export class NotificationsCityPage {
         });
         alert.present();
       }
+
+      // Dismissing the loading
+      loading.dismiss();
     });
   }
 
@@ -85,7 +84,7 @@ export class NotificationsCityPage {
     let loading = this.loadingController.create({
       content : "Laster vennligst vent..."
     });
-    loading.present();
+    loading.present(); 
     
     // Updating the arrays
     if(!event.value){
@@ -107,8 +106,7 @@ export class NotificationsCityPage {
     }
 
     // Updating the users settings
-    this.apiProvider.post('/user/setnotificationscity', {
-      serviceuserid : this.user['serviceuserid'],
+    this.apiProvider.put('/user/setnotificationscity/' + this.user['serviceuserid'], {
       cityid : cityid,
       operation : (event.value) ? 'add' : 'remove'
     }).subscribe((data) => {
@@ -117,7 +115,7 @@ export class NotificationsCityPage {
       loading.dismiss();
 
       // Checking the response status
-      if(data.status !== true){
+      if(data.errorMessage != undefined){
 
         // Email exists, please provide with another
         let alertController = this.alertController.create({
@@ -130,8 +128,8 @@ export class NotificationsCityPage {
       } else {
 
         // Saving the user id and returning
-        this.storage.set('pronto-user', data.data);
-        this.user = data.data;
+        this.storage.set('pronto-user', data);
+        this.user = data;
       }
 
     });

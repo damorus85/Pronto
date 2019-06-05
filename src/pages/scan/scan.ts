@@ -58,15 +58,13 @@ export class ScanPage {
     loading.present();
 
     // Sending the post data to the API
-    this.apiProvider.get('/customer/get', {
-      id : customerid
-    }).subscribe((data) => {
+    this.apiProvider.get('/customer/get/' + customerid).subscribe((data) => {
 
       // Dismissing the loading
       loading.dismiss();
-
+      
       // Checking status
-      if(data.status !== true){
+      if(data.errorMessage !== undefined){
 
         let alertController = this.alertController.create({
           title : "Fant ikke!",
@@ -77,11 +75,10 @@ export class ScanPage {
 
       } else {
         // Saving the customer and redirecting to the table selector
-        this.storage.set('pronto-sc', data.data);
+        this.storage.set('pronto-sc', data);
         this.storage.set('pronto-sc-date', Date.now());
         this.navCtrl.push(TableNumberPage);
       }
-      console.log(data);
     });
   }
 
